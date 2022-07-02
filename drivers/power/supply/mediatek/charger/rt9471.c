@@ -753,7 +753,7 @@ static int __rt9471_enable_safe_tmr(struct rt9471_chip *chip, bool en)
 
 static int __rt9471_enable_te(struct rt9471_chip *chip, bool en)
 {
-	dev_info(chip->dev, "%s en = %d\n", __func__, en);
+	dev_dbg(chip->dev, "%s en = %d\n", __func__, en);
 	return (en ? rt9471_set_bit : rt9471_clr_bit)
 		(chip, RT9471_REG_EOC, RT9471_TE_MASK);
 }
@@ -830,7 +830,7 @@ static int __rt9471_enable_chg(struct rt9471_chip *chip, bool en)
 	int ret = 0;
 	struct rt9471_desc *desc = chip->desc;
 
-	dev_info(chip->dev, "%s en = %d, chip_rev = %d\n",
+	dev_dbg(chip->dev, "%s en = %d, chip_rev = %d\n",
 			    __func__, en, chip->chip_rev);
 
 	if (chip->ceb_gpio != U32_MAX)
@@ -868,7 +868,7 @@ static int __rt9471_set_mivr(struct rt9471_chip *chip, u32 mivr)
 	regval = rt9471_closest_reg(RT9471_MIVR_MIN, RT9471_MIVR_MAX,
 				    RT9471_MIVR_STEP, mivr);
 
-	dev_info(chip->dev, "%s mivr = %d(0x%02X)\n", __func__, mivr, regval);
+	dev_dbg(chip->dev, "%s mivr = %d(0x%02X)\n", __func__, mivr, regval);
 
 	return rt9471_i2c_update_bits(chip, RT9471_REG_VBUS,
 				      regval << RT9471_MIVR_SHIFT,
@@ -885,7 +885,7 @@ static int __rt9471_set_aicr(struct rt9471_chip *chip, u32 aicr)
 	if (aicr < RT9471_AICR_MAX)
 		regval += 1;
 
-	dev_info(chip->dev, "%s aicr = %d(0x%02X)\n", __func__, aicr, regval);
+	dev_dbg(chip->dev, "%s aicr = %d(0x%02X)\n", __func__, aicr, regval);
 
 	return rt9471_i2c_update_bits(chip, RT9471_REG_IBUS,
 				      regval << RT9471_AICR_SHIFT,
@@ -899,7 +899,7 @@ static int __rt9471_set_cv(struct rt9471_chip *chip, u32 cv)
 	regval = rt9471_closest_reg(RT9471_CV_MIN, RT9471_CV_MAX,
 				    RT9471_CV_STEP, cv);
 
-	dev_info(chip->dev, "%s cv = %d(0x%02X)\n", __func__, cv, regval);
+	dev_dbg(chip->dev, "%s cv = %d(0x%02X)\n", __func__, cv, regval);
 
 	return rt9471_i2c_update_bits(chip, RT9471_REG_VCHG,
 				      regval << RT9471_CV_SHIFT,
@@ -913,7 +913,7 @@ static int __rt9471_set_ichg(struct rt9471_chip *chip, u32 ichg)
 	regval = rt9471_closest_reg(RT9471_ICHG_MIN, RT9471_ICHG_MAX,
 				    RT9471_ICHG_STEP, ichg);
 
-	dev_info(chip->dev, "%s ichg = %d(0x%02X)\n", __func__, ichg, regval);
+	dev_dbg(chip->dev, "%s ichg = %d(0x%02X)\n", __func__, ichg, regval);
 
 	return rt9471_i2c_update_bits(chip, RT9471_REG_ICHG,
 				      regval << RT9471_ICHG_SHIFT,
@@ -927,7 +927,7 @@ static int __rt9471_set_ieoc(struct rt9471_chip *chip, u32 ieoc)
 	regval = rt9471_closest_reg(RT9471_IEOC_MIN, RT9471_IEOC_MAX,
 				    RT9471_IEOC_STEP, ieoc);
 
-	dev_info(chip->dev, "%s ieoc = %d(0x%02X)\n", __func__, ieoc, regval);
+	dev_dbg(chip->dev, "%s ieoc = %d(0x%02X)\n", __func__, ieoc, regval);
 
 	return rt9471_i2c_update_bits(chip, RT9471_REG_EOC,
 				      regval << RT9471_IEOC_SHIFT,
@@ -979,7 +979,7 @@ static int __rt9471_set_mivrtrack(struct rt9471_chip *chip, u32 mivr_track)
 
 static int __rt9471_kick_wdt(struct rt9471_chip *chip)
 {
-	dev_info(chip->dev, "%s\n", __func__);
+	dev_dbg(chip->dev, "%s\n", __func__);
 	return rt9471_set_bit(chip, RT9471_REG_TOP, RT9471_WDTCNTRST_MASK);
 }
 
@@ -1071,22 +1071,22 @@ static int __rt9471_dump_registers(struct rt9471_chip *chip)
 		}
 	}
 
-	dev_info(chip->dev, "%s MIVR = %dmV, AICR = %dmA\n",
+	dev_dbg(chip->dev, "%s MIVR = %dmV, AICR = %dmA\n",
 		 __func__, mivr / 1000, aicr / 1000);
 
-	dev_info(chip->dev, "%s CV = %dmV, ICHG = %dmA, IEOC = %dmA\n",
+	dev_dbg(chip->dev, "%s CV = %dmV, ICHG = %dmA, IEOC = %dmA\n",
 		 __func__, cv / 1000, ichg / 1000, ieoc / 1000);
 
-	dev_info(chip->dev, "%s CHG_EN = %d, IC_STAT = %s\n",
+	dev_dbg(chip->dev, "%s CHG_EN = %d, IC_STAT = %s\n",
 		 __func__, chg_en, rt9471_ic_stat_name[ic_stat]);
 
-	dev_info(chip->dev, "%s STAT0 = 0x%02X, STAT1 = 0x%02X\n", __func__,
+	dev_dbg(chip->dev, "%s STAT0 = 0x%02X, STAT1 = 0x%02X\n", __func__,
 		 stats[RT9471_STATIDX_STAT0], stats[RT9471_STATIDX_STAT1]);
 
-	dev_info(chip->dev, "%s STAT2 = 0x%02X, STAT3 = 0x%02X\n", __func__,
+	dev_dbg(chip->dev, "%s STAT2 = 0x%02X, STAT3 = 0x%02X\n", __func__,
 		 stats[RT9471_STATIDX_STAT2], stats[RT9471_STATIDX_STAT3]);
 
-	dev_info(chip->dev, "%s HIDDEN_2 = 0x%02X\n", __func__, hidden_2);
+	dev_dbg(chip->dev, "%s HIDDEN_2 = 0x%02X\n", __func__, hidden_2);
 
 	return 0;
 }
@@ -2239,7 +2239,7 @@ static int rt9471_enable_charging(struct charger_device *chg_dev, bool en)
 	int ret = 0;
 	struct rt9471_chip *chip = dev_get_drvdata(&chg_dev->dev);
 
-	dev_info(chip->dev, "%s en = %d\n", __func__, en);
+	dev_dbg(chip->dev, "%s en = %d\n", __func__, en);
 
 	if (en) {
 		ret = __rt9471_set_wdt(chip, chip->desc->wdt);
@@ -2564,7 +2564,7 @@ static int rt9471_run_aicc(struct charger_device *chg_dev, u32 *uA)
 	bool chg_mivr = false;
 	u32 aicr = 0, aicc = 0;
 
-	dev_info(chip->dev, "%s chip_rev = %d\n", __func__, chip->chip_rev);
+	dev_dbg(chip->dev, "%s chip_rev = %d\n", __func__, chip->chip_rev);
 	if (chip->chip_rev < 4)
 		return -ENOTSUPP;
 
@@ -2573,7 +2573,7 @@ static int rt9471_run_aicc(struct charger_device *chg_dev, u32 *uA)
 	if (ret < 0)
 		return ret;
 	if (!chg_mivr) {
-		dev_info(chip->dev, "%s mivr stat not act\n", __func__);
+		dev_dbg(chip->dev, "%s mivr stat not act\n", __func__);
 		return ret;
 	}
 

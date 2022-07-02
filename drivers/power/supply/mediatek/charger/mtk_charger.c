@@ -1929,7 +1929,7 @@ static void charger_check_status(struct charger_manager *info)
 stop_charging:
 	mtk_battery_notify_check(info);
 
-	chr_err("tmp:%d (jeita:%d sm:%d cv:%d en:%d) (sm:%d) en:%d c:%d s:%d ov:%d sc:%d %d %d\n",
+	chr_debug("tmp:%d (jeita:%d sm:%d cv:%d en:%d) (sm:%d) en:%d c:%d s:%d ov:%d sc:%d %d %d\n",
 		temperature, info->enable_sw_jeita, info->sw_jeita.sm,
 		info->sw_jeita.cv, info->sw_jeita.charging, thermal->sm,
 		charging, info->cmd_discharging, info->safety_timeout,
@@ -2010,7 +2010,7 @@ static enum alarmtimer_restart
 	container_of(alarm, struct charger_manager, charger_timer);
 
 	if (info->is_suspend == false) {
-		chr_err("%s: not suspend, wake up charger\n", __func__);
+		chr_debug("%s: not suspend, wake up charger\n", __func__);
 		_wake_up_charger(info);
 	} else {
 		chr_err("%s: alarm timer timeout\n", __func__);
@@ -2040,7 +2040,7 @@ static void mtk_charger_start_timer(struct charger_manager *info)
 
 	ktime = ktime_set(info->endtime.tv_sec, info->endtime.tv_nsec);
 
-	chr_err("%s: alarm timer start:%d, %ld %ld\n", __func__, ret,
+	chr_debug("%s: alarm timer start:%d, %ld %ld\n", __func__, ret,
 		info->endtime.tv_sec, info->endtime.tv_nsec);
 	alarm_start(&pinfo->charger_timer, ktime);
 }
@@ -2087,7 +2087,7 @@ static int charger_routine_thread(void *arg)
 		bat_current = battery_get_bat_current();
 		chg_current = pmic_get_charging_current();
 		hvdcp_vbus_check(info);
-		chr_err("Vbat=%d,Ibat=%d,I=%d,VChr=%d,T=%d,Soc=%d:%d,CT:%d:%d hv:%d pd:%d:%d\n",
+		chr_debug("Vbat=%d,Ibat=%d,I=%d,VChr=%d,T=%d,Soc=%d:%d,CT:%d:%d hv:%d pd:%d:%d\n",
 			battery_get_bat_voltage(), bat_current, chg_current,
 			battery_get_vbus(), battery_get_bat_temperature(),
 			battery_get_soc(), battery_get_uisoc(),

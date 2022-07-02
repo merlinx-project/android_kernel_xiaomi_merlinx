@@ -442,7 +442,7 @@ done:
 		pdata2->input_current_limit = pdata2->input_current_limit / 2;
 	}
 
-	pr_notice("force:%d %d thermal:(%d %d,%d %d)(%d %d %d)setting:(%d %d)(%d %d)",
+	pr_debug("force:%d %d thermal:(%d %d,%d %d)(%d %d %d)setting:(%d %d)(%d %d)",
 		_uA_to_mA(pdata->force_charging_current),
 		_uA_to_mA(pdata2->force_charging_current),
 		_uA_to_mA(pdata->thermal_input_current_limit),
@@ -457,7 +457,7 @@ done:
 		_uA_to_mA(pdata2->input_current_limit),
 		_uA_to_mA(pdata2->charging_current_limit));
 
-	pr_notice("type:%d usb_unlimited:%d usbif:%d usbsm:%d aicl:%d atm:%d parallel:%d\n",
+	pr_debug("type:%d usb_unlimited:%d usbif:%d usbsm:%d aicl:%d atm:%d parallel:%d\n",
 		info->chr_type, info->usb_unlimited,
 		IS_ENABLED(CONFIG_USBIF_COMPLIANCE), info->usb_state,
 		_uA_to_mA(pdata->input_current_limit_by_aicl),
@@ -660,7 +660,7 @@ static void dual_swchg_turn_on_charging(struct charger_manager *info)
 		}
 	}
 
-	chr_err("chg1:%d chg2:%d chg2_chip_en:%d\n", chg1_enable, chg2_enable,
+	chr_debug("chg1:%d chg2:%d chg2_chip_en:%d\n", chg1_enable, chg2_enable,
 		chg2_chip_enabled);
 }
 
@@ -764,7 +764,7 @@ static int mtk_dual_switch_chr_cc(struct charger_manager *info)
 
 	charger_dev_is_enabled(info->chg2_dev, &chg2_en);
 
-	chr_err("safety_check state:%d en:%d thermal:%d",
+	chr_debug("safety_check state:%d en:%d thermal:%d",
 		swchgalg->state,
 		chg2_en,
 		pdata->thermal_charging_current_limit);
@@ -870,7 +870,7 @@ static int mtk_dual_switch_charging_run(struct charger_manager *info)
 	int ret = 10;
 	bool chg2_en = false;
 
-	pr_info("%s [%d]\n", __func__, swchgalg->state);
+	pr_debug("%s [%d]\n", __func__, swchgalg->state);
 
 	if (mtk_pdc_check_charger(info) == false &&
 	    mtk_is_TA_support_pd_pps(info) == false) {
