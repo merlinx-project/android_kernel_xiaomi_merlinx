@@ -1559,7 +1559,6 @@ void dprec_logger_dump_reset(void)
 {
 }
 
-
 char *dprec_logger_get_dump_addr(void)
 {
 	return NULL;
