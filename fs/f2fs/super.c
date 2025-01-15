@@ -3695,7 +3695,7 @@ try_onemore:
 	}
 
 	/* setup f2fs internal modules */
-	err = f2fs_build_segment_manager(sbi);
+    err = f2fs_build_segment_manager(sbi);
 	if (err) {
 		f2fs_err(sbi, "Failed to initialize F2FS segment manager (%d)",
 			 err);
