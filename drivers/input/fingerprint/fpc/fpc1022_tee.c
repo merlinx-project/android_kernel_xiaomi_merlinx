@@ -881,10 +881,9 @@ static int __init fpc1022_init(void)
 	}
 
 	//workaround to solve two spi device
-     	if (spi_fingerprint == NULL)
+     	if (spi_fingerprint != NULL) {
 	//	pr_debug("%s Line:%d spi device is NULL,cannot spi transfer\n",
 	//		  __func__, __LINE__);
-	else {
 		error = check_hwid(spi_fingerprint);
 
 		if (error < 0) {
