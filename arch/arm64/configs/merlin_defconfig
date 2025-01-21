@@ -584,7 +584,7 @@ CONFIG_RANDOMIZE_MODULE_REGION_FULL=y
 #
 # Boot options
 #
-CONFIG_CMDLINE="console=tty0 console=ttyMT3,921600n1 root=/dev/ram vmalloc=496M slub_max_order=0 slub_debug=0 "
+CONFIG_CMDLINE="console=tty0 console=ttyMT3,921600n1 root=/dev/ram vmalloc=496M slub_max_order=0 slub_debug=0 kvm-arm.mode=nvhe"
 CONFIG_CMDLINE_FROM_BOOTLOADER=y
 # CONFIG_CMDLINE_EXTEND is not set
 # CONFIG_CMDLINE_FORCE is not set
@@ -746,7 +746,7 @@ CONFIG_INET_TCP_DIAG=y
 CONFIG_INET_UDP_DIAG=y
 # CONFIG_INET_RAW_DIAG is not set
 CONFIG_INET_DIAG_DESTROY=y
-CONFIG_TCP_CONG_ADVANCED=y
+# CONFIG_TCP_CONG_ADVANCED is not set
 CONFIG_TCP_CONG_BIC=y
 CONFIG_TCP_CONG_CUBIC=y
 CONFIG_TCP_CONG_WESTWOOD=y
